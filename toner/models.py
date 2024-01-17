@@ -28,10 +28,14 @@ class Kenindia_Location(models.Model):
 class Toner_Request(models.Model):
     Staff_name = models.CharField(max_length = 500)
     Staff_ID = models.CharField(max_length = 500 , default = "")
-    Department = models.ForeignKey(Kenindia_Department,null = True ,on_delete = models.SET_NULL)
-    Location = models.ForeignKey(Kenindia_Location,null = True ,on_delete = models.SET_NULL)
-    Toner_name = models.ForeignKey(Toner,null = True ,on_delete = models.SET_NULL)
-    printer_name = models.ForeignKey(Printer,null = True ,on_delete = models.SET_NULL)
+    Department = models.CharField(max_length = 500 , default = "")
+    Location = models.CharField(max_length = 500 , default = "")
+    Toner_name = models.CharField(max_length = 500 , default = "")
+    printer_name = models.CharField(max_length = 500 , default = "")
+    # Department = models.ForeignKey(Kenindia_Department,null = True ,on_delete = models.SET_NULL)
+    # Location = models.ForeignKey(Kenindia_Location,null = True ,on_delete = models.SET_NULL)
+    # Toner_name = models.ForeignKey(Toner,null = True ,on_delete = models.SET_NULL)
+    # printer_name = models.ForeignKey(Printer,null = True ,on_delete = models.SET_NULL)
     issued = models.BooleanField(default = False)
     Date_of_request = models.DateTimeField(auto_now_add = True)
     def __str__(self):
