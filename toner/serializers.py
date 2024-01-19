@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth.models import User
 
 class Toner_RequestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,4 +26,9 @@ class Toner_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Toner
         fields = ['Toner']
+
+class User_serializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = User
+        fields = ['username','password','email']
 

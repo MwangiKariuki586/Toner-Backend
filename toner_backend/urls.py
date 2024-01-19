@@ -24,5 +24,6 @@ urlpatterns = [
     path('toners/',views.Toners_view),
     path('printers/',views.Printer_view),
     path('departments/',views.Department_view),
-    path('locations/',views.Location_view)
+    path('locations/',views.Location_view),
+    path('users',views.reg_view)
 ]
