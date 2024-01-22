@@ -5,10 +5,6 @@ from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import  status
-from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
-from django.shortcuts import get_list_or_404
-
 
 @api_view(['GET','POST'])
 def Toner_requests(request):
@@ -44,14 +40,3 @@ def Location_view(request):
     locations = Kenindia_Location.objects.all()
     serializer = Location_Serializer(locations, many = True)
     return JsonResponse({"Locations":serializer.data})
-def reg_view(request):
-    if request.method == 'POST':
-        serializer = User_serializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-def login_view(request):
-    user = get_list_or_404(User ,username = request.data['username'])
-    if not user.check_password()
