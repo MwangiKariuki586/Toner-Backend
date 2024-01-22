@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import *
-
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from rest_framework.exceptions import AuthenticationFailed
 class Toner_RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Toner_Request
@@ -25,4 +27,28 @@ class Toner_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Toner
         fields = ['Toner']
+
+# class UserSerializer(serializers.ModelSerializer):
+#     username=serializers.CharField(max_length = 500)
+#     password=serializers.CharField(max_length = 500,write_only=True)
+#     access_token=serializers.CharField(max_length = 500,read_only=True)
+#     refresh_token=serializers.CharField(max_length = 500,read_only=True)
+#     class Meta():
+#         model = User
+#         fields = ['username','password','access_token','refresh_token']
+
+#     def validate(self, attrs):
+#         username=attrs.get('email')
+#         password = attrs.get('password')
+#         request=self.context.get('request')
+#         user = authenticate(request, username=username,password=password)
+#         if not user:
+#             raise AuthenticationFailed("invalid credentials try again")
+#         token = user.tokens()
+
+#         return {
+#             'username':user.username,
+#             'access_token':user
+#         }
+    
 

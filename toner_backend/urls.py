@@ -28,5 +28,8 @@ urlpatterns = [
     path('toners/',views.Toners_view),
     path('printers/',views.Printer_view),
     path('departments/',views.Department_view),
-    path('locations/',views.Location_view)
+    path('locations/',views.Location_view),
+    path('',views.getRoutes),
+    path('api/token/', MyTokenObtainPairview.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
