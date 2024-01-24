@@ -10,6 +10,8 @@ from django.shortcuts import get_list_or_404
 from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from django.conf import settings
+from django.core.mail import send_mail
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -34,10 +36,15 @@ def Toner_requests(request):
         serializer = Toner_RequestSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
+            subject = 'Toner Request'
+            message = f'Hello Alex, New toner request from {serializer.data}'
+            email_from = 'aleqohmwas@gmail.com'
+            recipient_list = ['mwangikariuki586@gmail.com']
+            send_mail( subject, message, email_from, recipient_list ,fail_silently=False )
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         else:
             return Response(status = status.HTTP_400_BAD_REQUEST)
-
+    
 def Toners_view(request):
     toners = Toner.objects.all()
     serializer =  Toner_Serializer(toners, many = True)

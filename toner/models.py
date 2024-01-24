@@ -27,7 +27,7 @@ class Kenindia_Location(models.Model):
         return self.Location_name
 class Toner_Request(models.Model):
     Staff_name = models.CharField(max_length = 500)
-    Staff_ID = models.CharField(max_length = 500 , default = "")
+    Staff_ID = models.CharField(max_length = 500 , default = "", unique = True)
     Department = models.CharField(max_length = 500 , default = "")
     Location = models.CharField(max_length = 500 , default = "")
     Toner_name = models.CharField(max_length = 500 , default = "")
