@@ -12,7 +12,7 @@ class Toner(models.Model):
     time_created = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return self.Toner
+        return f" name:{self.Toner} + printer:{self.printer_name}"
 class Kenindia_Department(models.Model):
     Department_name = models.CharField(max_length = 500)
     time_created = models.DateTimeField(auto_now_add = True)
@@ -38,5 +38,6 @@ class Toner_Request(models.Model):
     # printer_name = models.ForeignKey(Printer,null = True ,on_delete = models.SET_NULL)
     issued = models.BooleanField(default = False)
     Date_of_request = models.DateTimeField(auto_now_add = True)
+
     def __str__(self):
-        return self.Staff_name
+        return f"{self.Staff_name} + issued:{self.issued} "
