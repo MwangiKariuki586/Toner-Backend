@@ -9,6 +9,7 @@ class Printer(models.Model):
 class Toner(models.Model):
     Toner = models.CharField(max_length = 500,default = "")
     printer_name = models.ForeignKey(Printer, null = True ,on_delete = models.SET_NULL)
+    quantity = models.IntegerField(default = 0)
     time_created = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):

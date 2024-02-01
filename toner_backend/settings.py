@@ -33,9 +33,13 @@ EMAIL_HOST_USER = 'aleqohmwas@gmail.com'
 EMAIL_HOST_PASSWORD = 'fpvs aghg uhhz wdvv'
 EMAIL_RECIPIENT = 'mwangikariuki586@gmail.com'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "192.168.9.17","127.0.0.1","localhost"
+]
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://192.168.9.17:5173",
+    "http://192.168.9.17:8000",
 ]
 
 # Application definition
@@ -167,7 +171,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
