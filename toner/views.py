@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import *
+from customuser.models import CustomUser
 from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -15,11 +16,11 @@ from django.core.mail import send_mail
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
+    def get_token(cls, CustomUser):
+        token = super().get_token(CustomUser)
 
         # Add custom claims
-        token['username'] = user.username
+        token['staff_id'] = CustomUser.staff_id
         # ...
 
         return token
