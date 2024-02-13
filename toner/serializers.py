@@ -1,12 +1,22 @@
 from rest_framework import serializers
+
+from custom_auth.models import CustomUser
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from rest_framework.exceptions import AuthenticationFailed
+
+from rest_framework import serializers
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('staff_id', 'password')
+
 class Toner_RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Toner_Request
-        fields = ['Staff_name','Staff_ID','Department','Location','Toner_name','printer_name']
+        fields = '__all__'
 
 class Departments_Serializer(serializers.ModelSerializer):
     class Meta:
@@ -26,7 +36,7 @@ class Printer_Serializer(serializers.ModelSerializer):
 class Toner_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Toner
-        fields = ['Toner']
+        fields = '__all__'
 
 # class UserSerializer(serializers.ModelSerializer):
 #     username=serializers.CharField(max_length = 500)

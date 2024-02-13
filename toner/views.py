@@ -8,43 +8,63 @@ from rest_framework import  status
 from rest_framework.authtoken.models import Token
 from django.shortcuts import get_list_or_404
 from rest_framework.generics import GenericAPIView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 from django.conf import settings
 from django.core.mail import send_mail
+from django.contrib.auth.decorators import login_required
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
 
-        # Add custom claims
-        token['username'] = user.username
-        # ...
+# @api_view(['GET','POST'])
+# def Toner_requests(request):
+#     if request.method == 'GET':
+#         requests_toners = Toner_Request.objects.all()
+#         serializer =  Toner_RequestSerializer(requests_toners, many = True)
+#         return JsonResponse({"Toner_requests":serializer.data})
 
-        return token
-class MyTokenObtainPairview(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
-@api_view(['GET','POST'])
+#     if request.method == 'POST':
+#         serializer = Toner_RequestSerializer(data = request.data)
+        
+#         if serializer.is_valid():
+#             # toner_id = serializer.validated_data['Toner_name']
+#             # toner = Toner.objects.get(Toner_name = toner_id)
+#             # toner.quantity -= 1
+#             # toner.save()
+#             serializer.save()
+
+#             subject = 'Toner Request'
+#             message = f'Hello Alex, New toner request from {serializer.data}'
+#             email_from = 'aleqohmwas@gmail.com'
+#             recipient_list = ['hurtlessemkay@gmail.com']
+#             send_mail( subject, message, email_from, recipient_list ,fail_silently=False )
+#             return Response(serializer.data, status = status.HTTP_201_CREATED)
+#         else:
+#             return Response(status = status.HTTP_400_BAD_REQUEST)
+    
+@login_required  # Use this decorator to ensure the user is logged in
+@api_view(['GET', 'POST'])
 def Toner_requests(request):
     if request.method == 'GET':
         requests_toners = Toner_Request.objects.all()
-        serializer =  Toner_RequestSerializer(requests_toners, many = True)
-        return JsonResponse({"Toner_requests":serializer.data})
+        serializer = Toner_RequestSerializer(requests_toners, many=True)
+        return JsonResponse({"Toner_requests": serializer.data})
 
     if request.method == 'POST':
-        serializer = Toner_RequestSerializer(data = request.data)
+        serializer = Toner_RequestSerializer(data=request.data)
+
         if serializer.is_valid():
+            # Set the user field based on the logged-in user
+            serializer.validated_data['user'] = request.user
+            
+            # No need to manually update toner quantity here
             serializer.save()
+
             subject = 'Toner Request'
-            message = f'Hello Alex, New toner request from {serializer.data}'
+            message = f'Hello {request.user.staff_name}, New toner request from {serializer.data}'
             email_from = 'aleqohmwas@gmail.com'
-            recipient_list = ['mwangikariuki586@gmail.com']
-            send_mail( subject, message, email_from, recipient_list ,fail_silently=False )
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
+            recipient_list = ['hurtlessemkay@gmail.com']
+            send_mail(subject, message, email_from, recipient_list, fail_silently=False)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status = status.HTTP_400_BAD_REQUEST)
-    
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 def Toners_view(request):
     toners = Toner.objects.all()
     serializer =  Toner_Serializer(toners, many = True)

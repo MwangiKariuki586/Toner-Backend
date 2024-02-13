@@ -7,12 +7,13 @@ class Printer(models.Model):
     def __str__(self):
         return self.Printer_name
 class Toner(models.Model):
-    Toner = models.CharField(max_length = 500,default = "")
+    Toner_name = models.CharField(max_length = 500,default = "")
     printer_name = models.ForeignKey(Printer, null = True ,on_delete = models.SET_NULL)
+    quantity = models.PositiveIntegerField(default = 0)
     time_created = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return f" name:{self.Toner} + printer:{self.printer_name}"
+        return self.Toner_name
 class Kenindia_Department(models.Model):
     Department_name = models.CharField(max_length = 500)
     time_created = models.DateTimeField(auto_now_add = True)
@@ -30,14 +31,12 @@ class Toner_Request(models.Model):
     Staff_ID = models.CharField(max_length = 500 , default = "", unique = True)
     Department = models.CharField(max_length = 500 , default = "")
     Location = models.CharField(max_length = 500 , default = "")
-    Toner_name = models.CharField(max_length = 500 , default = "")
+    toner = models.ForeignKey(Toner, null=True, on_delete=models.SET_NULL)
     printer_name = models.CharField(max_length = 500 , default = "")
-    # Department = models.ForeignKey(Kenindia_Department,null = True ,on_delete = models.SET_NULL)
-    # Location = models.ForeignKey(Kenindia_Location,null = True ,on_delete = models.SET_NULL)
-    # Toner_name = models.ForeignKey(Toner,null = True ,on_delete = models.SET_NULL)
-    # printer_name = models.ForeignKey(Printer,null = True ,on_delete = models.SET_NULL)
     issued = models.BooleanField(default = False)
     Date_of_request = models.DateTimeField(auto_now_add = True)
+    _previous_issued = models.BooleanField(default=False, editable=False)
+
 
     def __str__(self):
-        return f"{self.Staff_name} + issued:{self.issued} "
+        return self.Staff_name
