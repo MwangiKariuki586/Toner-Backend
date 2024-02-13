@@ -53,7 +53,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'toner',
+<<<<<<< HEAD
     'custom_auth',
+=======
+    'customuser',
+>>>>>>> 38a34a7d2b3efdc93001c98d9d84513ffe73f73b
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
 
@@ -103,7 +107,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+AUTH_USER_MODEL = 'customuser.CustomUser'
 REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (

@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import *
+from customuser.models import CustomUser
 from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -12,6 +13,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
 
+<<<<<<< HEAD
 
 # @api_view(['GET','POST'])
 # def Toner_requests(request):
@@ -19,6 +21,16 @@ from django.contrib.auth.decorators import login_required
 #         requests_toners = Toner_Request.objects.all()
 #         serializer =  Toner_RequestSerializer(requests_toners, many = True)
 #         return JsonResponse({"Toner_requests":serializer.data})
+=======
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, CustomUser):
+        token = super().get_token(CustomUser)
+
+        # Add custom claims
+        token['staff_id'] = CustomUser.staff_id
+        # ...
+>>>>>>> 38a34a7d2b3efdc93001c98d9d84513ffe73f73b
 
 #     if request.method == 'POST':
 #         serializer = Toner_RequestSerializer(data = request.data)
