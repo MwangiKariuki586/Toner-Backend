@@ -2,7 +2,7 @@
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import Toner_Request
+from custom_auth.models import Toner_Request
 
 @receiver(post_save, sender=Toner_Request)
 def update_toner_quantity(sender, instance, created, **kwargs):

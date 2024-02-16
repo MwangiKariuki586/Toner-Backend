@@ -1,13 +1,16 @@
 from rest_framework import serializers
 
-from custom_auth.models import CustomUser
+from custom_auth.models import CustomUser, Kenindia_Department, Kenindia_Location, Printer, Toner, Toner_Request
 from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from rest_framework import serializers
 
-
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email'] 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser

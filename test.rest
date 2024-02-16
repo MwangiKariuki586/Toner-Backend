@@ -1,8 +1,6 @@
-POST http://localhost:8000/user/
+POST http://localhost:8000/api/login/
 Content-Type: application/json
 
-<<<<<<< HEAD
-{"staff_id":"003","password":"3mkay001"}
-=======
-{"staff_id":"111","password":"3mkay001"}
->>>>>>> 38a34a7d2b3efdc93001c98d9d84513ffe73f73b
+{"staffid":"111","password":"3mkay001"}
+
+

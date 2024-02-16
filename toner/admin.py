@@ -1,15 +1,17 @@
 from django.contrib import admin
 from .models import *
+from custom_auth.models import CustomUser
 
-class toneradmin(admin.ModelAdmin):
-    list_display = ('Staff_name','Staff_ID','Department','Location','toner','printer_name','Date_of_request','issued')
-class tonersAdmin(admin.ModelAdmin):
-    list_display = ('Toner_name','quantity')
+# class toneradmin(admin.ModelAdmin):
+#     list_display = ('user', 'issued', 'toner', 'Date_of_request')
+#     list_filter = ('issued', 'toner', 'Date_of_request')
+#     search_fields = ('user__username', 'toner__Toner_name')
+# class tonersAdmin(admin.ModelAdmin):
+#     list_display = ('toner','quantity')
 
-admin.site.register(Toner,tonersAdmin)
-admin.site.register(Toner_Request,toneradmin)
-admin.site.register(Printer)
-admin.site.register(Kenindia_Department)
-admin.site.register(Kenindia_Location)
+# admin.site.register(Toner,)
+# admin.site.register(Toner_Request,)
+# admin.site.register(Printer)
+
  
 
