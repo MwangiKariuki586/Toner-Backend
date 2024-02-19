@@ -20,6 +20,23 @@ class Toner_RequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Toner_Request
         fields = '__all__'
+    def create(self, validated_data):
+        # Access the request object and extract user-related information
+        request = self.context.get('request')
+        if request:
+            user = request.user
+            validated_data['user_staffid'] = user.staffid
+            validated_data['user_staffname'] = user.staff_name
+            validated_data['user_department'] = user.department.Department_name if user.department else None
+            validated_data['user_location'] = user.location.Location_name if user.location else None
+             # Validate 'toner' and 'printer_name'
+            if not validated_data.get('toner'):
+                raise serializers.ValidationError("'toner' is a required field.")
+            if not validated_data.get('printer_name'):
+                raise serializers.ValidationError("'printer_name' is a required field.")
+
+        # Create and return the Toner_Request instance
+        return Toner_Request.objects.create(**validated_data)
 
 class Departments_Serializer(serializers.ModelSerializer):
     class Meta:

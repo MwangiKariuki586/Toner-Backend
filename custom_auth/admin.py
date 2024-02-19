@@ -19,7 +19,7 @@ class CustomUserAdmin(BaseUserAdmin):
     search_fields = ('staffid', 'staff_name', 'department', 'location')
     ordering = ('staffid',)
 class TonerRequestAdmin(admin.ModelAdmin):
-    list_display = ('user_staffname','user_staffid', 'user_department', 'user_location','toner' ,'printer_name','Date_of_request')
+    list_display = ('user_staffname','user_staffid', 'user_department', 'user_location','toner' ,'printer_name','Date_of_request','issued')
     list_filter = ('Date_of_request',)
     search_fields = ('user_staffname', 'user_department', 'user_location')
 

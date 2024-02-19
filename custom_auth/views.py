@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import CustomUserSerializer, LoginSerializer
+from .serializers import CustomUserSerializer, LoginSerializer,RefreshTokenSerializer
 from .models import CustomUser
 
 class CustomUserCreateView(generics.CreateAPIView):
@@ -33,3 +33,21 @@ class LoginView(generics.CreateAPIView):
             return Response(response_data, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+class RefreshTokenView(generics.CreateAPIView):
+    serializer_class = RefreshTokenSerializer  # Use the appropriate serializer for refresh token
+
+    def create(self, request, *args, **kwargs):
+        refresh = request.data.get('refresh')
+        serializer = self.get_serializer(data={'refresh': refresh})
+
+        if serializer.is_valid():
+            refresh_token = serializer.validated_data.get('refresh')
+            access_token = RefreshToken(refresh_token).access_token
+
+            response_data = {
+                'access': str(access_token),
+            }
+
+            return Response(response_data, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid refresh token'}, status=status.HTTP_401_UNAUTHORIZED)

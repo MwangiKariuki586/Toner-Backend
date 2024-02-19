@@ -46,3 +46,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     staffid = serializers.CharField(max_length=50)
     password = serializers.CharField(write_only=True)
+
+class RefreshTokenSerializer(serializers.Serializer):
+    refresh = serializers.CharField()

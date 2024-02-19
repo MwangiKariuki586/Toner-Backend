@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from .models import *
+from custom_auth.models import *
 from .serializers import *
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -22,10 +23,21 @@ def Toner_requests(request):
         return JsonResponse({"Toner_requests": serializer.data})
 
     if request.method == 'POST':
-        serializer = Toner_RequestSerializer(data=request.data)
+           # Set the user-related fields directly in the serializer
+        data = {
+            'user_staffid': request.user.staffid,
+            'user_staffname': request.user.staff_name,
+            'user_department': request.user.department.Department_name if request.user.department else None,
+            'user_location': request.user.location.Location_name if request.user.location else None,
+            'toner': request.data.get('toner'),  # Adjust based on your serializer
+            'printer_name': request.data.get('printer_name'),  # Adjust based on your serializer
+            'issued': False,
+        }
+
+        serializer = Toner_RequestSerializer(data=data, context={'request': request})
 
         if serializer.is_valid():
-            serializer.validated_data['user'] = request.user
+            #serializer.validated_data['user'] = request.user
             serializer.save()
             print(f"Data sent from frontend: {serializer.data}")
             subject = 'Toner Request'
