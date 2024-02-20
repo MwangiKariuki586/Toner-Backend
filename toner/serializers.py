@@ -51,7 +51,7 @@ class Location_Serializer(serializers.ModelSerializer):
 class Printer_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Printer
-        fields = ['Printer_name']
+        fields = '__all__'
 
 class Toner_Serializer(serializers.ModelSerializer):
     class Meta:
