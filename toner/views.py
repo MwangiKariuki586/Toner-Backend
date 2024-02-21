@@ -39,9 +39,32 @@ def Toner_requests(request):
         if serializer.is_valid():
             #serializer.validated_data['user'] = request.user
             serializer.save()
-            print(f"Data sent from frontend: {serializer.data}")
+            #print(f"Data sent from frontend: {serializer.data}")
+            toner_request_data = serializer.data
+            staff_id = toner_request_data.get('user_staffid', 'Unknown Staff ID')
+            staff_name = toner_request_data.get('user_staffname', 'Unknown Staff Name')
+            department = toner_request_data.get('user_department', 'Unknown Department')
+            location = toner_request_data.get('user_location', 'Unknown Location')
+            toner_id = toner_request_data.get('toner', None)
+            
+            # Fetch tonername using tonerid
+            try:
+                toner = Toner.objects.get(id=toner_id)
+                toner_name = toner.Toner_name
+            except Toner.DoesNotExist:
+                toner_name = 'Unknown Toner Name'
+            
+            # Construct the email message
             subject = 'Toner Request'
-            message = f'Hello {request.user.staff_name}, New toner request from {serializer.data}'
+            message = (
+                f'Hello, there is a new toner request from:\n'
+                f'Staff ID: {staff_id}\n'
+                f'Staff Name: {staff_name}\n'
+                f'Department: {department}\n'
+                f'Location: {location}\n'
+                f'For:\n'
+                f'Toner Name: {toner_name}\n'
+            )
             email_from = 'aleqohmwas@gmail.com'
             recipient_list = ['hurtlessemkay@gmail.com']
             try:

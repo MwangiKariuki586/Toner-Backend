@@ -21,6 +21,7 @@ from toner import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin/password_reset/', include('django.contrib.auth.urls')),
     path('api/', include('custom_auth.urls')),
     path('toner/', include('toner.urls')),
 

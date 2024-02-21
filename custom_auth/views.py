@@ -18,11 +18,11 @@ class LoginView(generics.CreateAPIView):
         staffid = serializer.validated_data['staffid']
         password = serializer.validated_data['password']
         #check if user exists before authentication
-        try:
-            user = CustomUser.objects.get(staffid=staffid)
-        except CustomUser.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
-        #.......
+        # try:
+        #     user = CustomUser.objects.get(staffid=staffid)
+        # except CustomUser.DoesNotExist:
+        #     return Response({'error': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
+        # #.......
         user = CustomUser.objects.get(staffid=staffid)
         if user.check_password(password):
             refresh = RefreshToken.for_user(user)

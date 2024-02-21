@@ -1,8 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import CustomUser, Kenindia_Department, Kenindia_Location, Printer, Toner, Toner_Request
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AdminPasswordChangeForm
+
 
 class CustomUserAdmin(BaseUserAdmin):
+    change_password_form = AdminPasswordChangeForm
     list_display = ('staffid', 'staff_name', 'department', 'location', 'is_staff', 'last_login')
     fieldsets = (
         (None, {'fields': ('staffid','password')}),
@@ -18,6 +21,8 @@ class CustomUserAdmin(BaseUserAdmin):
     )
     search_fields = ('staffid', 'staff_name', 'department', 'location')
     ordering = ('staffid',)
+    list_filter = ('department', 'location', 'is_staff', 'is_superuser')
+
 class TonerRequestAdmin(admin.ModelAdmin):
     list_display = ('user_staffname','user_staffid', 'user_department', 'user_location','toner' ,'printer_name','Date_of_request','issued')
     list_filter = ('Date_of_request',)
