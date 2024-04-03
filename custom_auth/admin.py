@@ -24,10 +24,10 @@ class CustomUserAdmin(BaseUserAdmin):
     list_filter = ('department', 'location', 'is_staff', 'is_superuser')
 
 class TonerRequestAdmin(admin.ModelAdmin):
-    list_display = ('user_staffname','user_staffid', 'user_department', 'user_location','toner' ,'printer_name','Date_of_request','issued')
+    list_display = ('user_staffname','user_staffid', 'user_department', 'user_location','toner' ,'printer_name','Date_of_request','issued',"days_since_request")
     list_filter = ('Date_of_request',)
     search_fields = ('user_staffname', 'user_department', 'user_location')
-
+    actions = ['set_request_to_issued']
     def user_staffname(self, obj):
         return obj.user_staffname if obj.user_staffname else 'Unassigned'
 
@@ -52,6 +52,13 @@ class TonerRequestAdmin(admin.ModelAdmin):
             obj.user_location = request.user.location
 
         super().save_model(request, obj, form, change)
+    
+
+    def set_request_to_issued(self, request, queryset):
+        queryset.update(issued=True)
+
+    set_request_to_issued.short_description = "Set selected requests to issued"  # Set custom action description
+
 # Register the custom user model with the CustomUserAdmin
 
 admin.site.register(CustomUser, CustomUserAdmin)

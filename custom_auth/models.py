@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser,BaseUserManager
 from django.db import models
-
+from django.utils import timezone
 
 class Kenindia_Department(models.Model):
     Department_name = models.CharField(max_length = 500)
@@ -46,6 +46,10 @@ class Toner_Request(models.Model):
             self.user_department = self._request_user.department
             self.user_location = self._request_user.location
         super(Toner_Request, self).save(*args, **kwargs)
+    @property
+    def days_since_request(self):
+        difference = timezone.now() - self.Date_of_request
+        return difference.days
 class CustomUserManager(BaseUserManager):
     def create_user(self, staffid, password=None, **extra_fields):
         if not staffid:
