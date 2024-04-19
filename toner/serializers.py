@@ -58,27 +58,15 @@ class Toner_Serializer(serializers.ModelSerializer):
         model = Toner
         fields = '__all__'
 
-# class UserSerializer(serializers.ModelSerializer):
-#     username=serializers.CharField(max_length = 500)
-#     password=serializers.CharField(max_length = 500,write_only=True)
-#     access_token=serializers.CharField(max_length = 500,read_only=True)
-#     refresh_token=serializers.CharField(max_length = 500,read_only=True)
-#     class Meta():
-#         model = User
-#         fields = ['username','password','access_token','refresh_token']
+from rest_framework import serializers
 
-#     def validate(self, attrs):
-#         username=attrs.get('email')
-#         password = attrs.get('password')
-#         request=self.context.get('request')
-#         user = authenticate(request, username=username,password=password)
-#         if not user:
-#             raise AuthenticationFailed("invalid credentials try again")
-#         token = user.tokens()
+class UserallSerializer(serializers.ModelSerializer):
+    department_name = serializers.CharField(source='department.Department_name', read_only=True)
+    location_name = serializers.CharField(source='location.Location_name', read_only=True)
 
-#         return {
-#             'username':user.username,
-#             'access_token':user
-#         }
-    
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'staff_name', 'staffid','department_name','location_name', 'is_superuser', 'is_active', 'date_joined', 'last_login']
+
+
 

@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\intern.it5\Documents\AMG\Toner Backend\venv"
+VIRTUAL_ENV="E:\AMG\Toner-Backend - V1.1\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

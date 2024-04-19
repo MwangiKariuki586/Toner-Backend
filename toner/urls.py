@@ -7,5 +7,6 @@ urlpatterns = [
     path('printers/',views.Printer_view),
     path('departments/',views.Department_view),
     path('locations/',views.Location_view),
+    path('users/',views.Userall_view),
 
 ]

@@ -108,12 +108,11 @@ def Location_view(request):
     locations = Kenindia_Location.objects.all()
     serializer = Location_Serializer(locations, many = True)
     return JsonResponse({"Locations":serializer.data})
+def Userall_view(request):
+    Users = CustomUser.objects.all()
+    serializer =  UserallSerializer(Users, many = True)
+    return JsonResponse({"Users":serializer.data})
 
-# class loginView(GenericAPIView):
-#     serializer_class = UserSerializer
-#     def post(self,request):
-#         serializer = self.serializer_class(data = request.data)
-#         serializer.is_valid(raise_exception = True)
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
