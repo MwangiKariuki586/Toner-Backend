@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 
 @api_view(['GET', 'POST'])  
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def Toner_requests(request):
     if request.method == 'GET':
         requests_toners = Toner_Request.objects.all()

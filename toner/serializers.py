@@ -41,12 +41,12 @@ class Toner_RequestSerializer(serializers.ModelSerializer):
 class Departments_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Kenindia_Department
-        fields = ['Department_name']
+        fields = '__all__'
 
 class Location_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Kenindia_Location
-        fields = ['Location_name']
+        fields = '__all__'
 
 class Printer_Serializer(serializers.ModelSerializer):
     class Meta:
