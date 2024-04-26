@@ -89,34 +89,93 @@ def Toner_requests(request):
         #     return Response(serializer.data, status=status.HTTP_201_CREATED)
         # else:
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+def Toner_request_detail(request, pk):
+    try:
+        toner_request = Toner_Request.objects.get(pk=pk)
+    except Toner_Request.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = Toner_RequestSerializer(toner_request)
+    return Response(serializer.data)
 def Toners_view(request):
     toners = Toner.objects.all()
     serializer =  Toner_Serializer(toners, many = True)
     return JsonResponse({"Toners":serializer.data})
+@api_view(['GET'])
+def Toner_detail(request, pk):
+    try:
+        toner = Toner.objects.get(pk=pk)
+    except Toner.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
+    serializer = Toner_Serializer(toner)
+    return Response(serializer.data)
 def Printer_view(request):
     printers = Printer.objects.all()
     serializer =  Printer_Serializer(printers, many = True)
     return JsonResponse({"Printer":serializer.data})
+@api_view(['GET'])
+def Printer_detail(request, pk):
+    try:
+        printer = Printer.objects.get(pk=pk)
+    except Printer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
+    serializer = Printer_Serializer(printer)
+    return Response(serializer.data)
 def Department_view(request):
     departments = Kenindia_Department.objects.all()
     serializer =  Departments_Serializer(departments, many = True)
     return JsonResponse({"Departments":serializer.data})
+@api_view(['GET'])
+def Department_detail(request, pk_or_name):
+    try:
+        # Try to lookup by ID first
+        department = Kenindia_Department.objects.get(pk=pk_or_name)
+    except (Kenindia_Department.DoesNotExist, ValueError):
+        # If not found by ID, try to lookup by name
+        try:
+            department = Kenindia_Department.objects.get(Department_name=pk_or_name)
+        except Kenindia_Department.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
+    serializer = Departments_Serializer(department)
+    return Response(serializer.data)
 def Location_view(request):
     locations = Kenindia_Location.objects.all()
     serializer = Location_Serializer(locations, many = True)
     return JsonResponse({"Locations":serializer.data})
+@api_view(['GET'])
+def Location_detail(request, pk_or_name):
+    try:
+        location = Kenindia_Location.objects.get(pk=pk_or_name)
+    except (Kenindia_Location.DoesNotExist, ValueError):
+        # If not found by ID, try to lookup by name
+        try:
+            location = Kenindia_Location.objects.get(Location_name=pk_or_name)
+        except Kenindia_Location.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = Location_Serializer(location)
+    return Response(serializer.data)
 def Userall_view(request):
     Users = CustomUser.objects.all()
     serializer =  UserallSerializer(Users, many = True)
     return JsonResponse({"Users":serializer.data})
-
 @api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        'api/token',
-        'api/token/refresh',
-    ]
-    return Response(routes)
+def User_detail(request, pk):
+    try:
+        user = CustomUser.objects.get(pk=pk)
+    except CustomUser.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = UserallSerializer(user)
+    return Response(serializer.data)
+# @api_view(['GET'])
+# def getRoutes(request):
+#     routes = [
+#         'api/token',
+#         'api/token/refresh',
+#     ]
+#     return Response(routes)
