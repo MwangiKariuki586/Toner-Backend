@@ -1,6 +1,12 @@
 from rest_framework import serializers
 from .models import CustomUser
+class UserallSerializer(serializers.ModelSerializer):
+    department_name = serializers.CharField(source='department.Department_name', read_only=True)
+    location_name = serializers.CharField(source='location.Location_name', read_only=True)
 
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'staff_name', 'staffid','department_name','location_name', 'is_superuser', 'is_active', 'date_joined', 'last_login']
 class CustomUserSerializer(serializers.ModelSerializer):
     password_confirmation = serializers.CharField(write_only=True)
 
@@ -43,6 +49,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+    def delete(self, instance):
+        instance.delete()
 class LoginSerializer(serializers.Serializer):
     staffid = serializers.CharField(max_length=50)
     password = serializers.CharField(write_only=True)

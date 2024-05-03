@@ -1,10 +1,19 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import CustomUserSerializer, LoginSerializer,RefreshTokenSerializer
+from .serializers import CustomUserSerializer, LoginSerializer,RefreshTokenSerializer,UserallSerializer
 from .models import CustomUser
 from rest_framework.decorators import api_view, permission_classes
+
 class CustomUserCreateView(generics.CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
+class CustomUserListView(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserallSerializer
+
+class CustomUserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 @api_view(['POST'])
